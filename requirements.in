@@ -1,0 +1,6 @@
+pytest==4.3.1
+Faker==1.0.4
+robobrowser==0.5.3
+selenium==3.141.0
+logzero==1.5.0
+pre-commit==1.15.1
