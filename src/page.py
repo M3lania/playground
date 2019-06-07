@@ -43,44 +43,28 @@ class Page:
             self.browser.get(url)
         except TimeoutException as err:
             err.msg = (
-                "\nTimeout while waiting for page load to complete."
-                "\n{page} Load Timeout: {timeout}"
-                "\nURL: {url}".format(
-                    page=self.__class__.__name__,
-                    timeout=self.page_load_timeout,
-                    url=url,
-                )
+                f'\nTimeout while waiting for page load to complete.'
+                f'\n{self.__class__.__name__} Timeout: {self.page_load_timeout}'
+                f'\nURL: {url}'
             )
             raise
 
     def is_current(self):
-        self.wait.until(
-            ec.title_contains(self.page_title),
-            message="\nExpected page title: {}."
-            "\nActual page title: {}."
-            "\nRequested url: {}".format(
-                self.page_title, self.browser.title, self.browser.current_url
-            ),
-        )
+        self.wait.until(ec.title_contains(self.page_title),
+                        message=f'\nExpected page title: {self.page_title}.'
+                                f'\nActual page title: {self.browser.title}.'
+                                f'\nRequested url: {self.browser.current_url}'
+                        )
 
     def wait_to_load(self):
         by, value = self.page_is_loaded
         element_present(self.browser, by=by, value=value)
 
     def __repr__(self):
-        msg = "{class_name}('{base_url}', '{env}', '{browser}')"
-        return msg.format(
-            class_name=self.__class__.__name__,
-            base_url=self.base_url,
-            env=self.env,
-            browser=self.browser.name,
-        )
+        return (f"{self.__class__.__name__}('{self.base_url}', '{self.env}', "
+                f"'{self.browser.name}')")
 
     def __str__(self):
-        msg = "{} instance: base_url='{}', browser='{}', url='{}'"
-        return msg.format(
-            self.__class__.__name__,
-            self.base_url,
-            self.browser.name,
-            self.full_url
-        )
+        return (f"{self.__class__.__name__} instance: "
+                f"base_url='{self.base_url}', browser='{self.browser.name}', "
+                f"url='{self.full_url}'")

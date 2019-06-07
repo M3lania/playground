@@ -1,14 +1,6 @@
 from logzero import logger
 
 
-class SignUpError(Exception):
-    pass
-
-
-class LocateError(Exception):
-    pass
-
-
 class Base:
     def __init__(self, robobrowser, base_url, path):
         self.robobrowser = robobrowser
@@ -40,8 +32,7 @@ class SignUp(Base):
 
         errors = self.robobrowser.select("td.text")
         if errors:
-            raise SignUpError(errors[0].text)
-
+            raise Exception(errors[0].text)
         return self.robobrowser.response.text
 
 
@@ -56,7 +47,7 @@ class Locate(Base):
 
         errors = self.robobrowser.select("div.alert.alert-danger")
         if errors:
-            raise LocateError(errors[0].text)
+            raise Exception(errors[0].text)
         return self.robobrowser
 
     def latt_longt_url(self, value):
