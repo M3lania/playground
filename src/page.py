@@ -50,21 +50,26 @@ class Page:
             raise
 
     def is_current(self):
-        self.wait.until(ec.title_contains(self.page_title),
-                        message=f'\nExpected page title: {self.page_title}.'
-                                f'\nActual page title: {self.browser.title}.'
-                                f'\nRequested url: {self.browser.current_url}'
-                        )
+        self.wait.until(
+            ec.title_contains(self.page_title),
+            message=f'\nExpected page title: {self.page_title}.'
+            f'\nActual page title: {self.browser.title}.'
+            f'\nRequested url: {self.browser.current_url}',
+        )
 
     def wait_to_load(self):
         by, value = self.page_is_loaded
         element_present(self.browser, by=by, value=value)
 
     def __repr__(self):
-        return (f"{self.__class__.__name__}('{self.base_url}', '{self.env}', "
-                f"'{self.browser.name}')")
+        return (
+            f"{self.__class__.__name__}('{self.base_url}', '{self.env}', "
+            f"'{self.browser.name}')"
+        )
 
     def __str__(self):
-        return (f"{self.__class__.__name__} instance: "
-                f"base_url='{self.base_url}', browser='{self.browser.name}', "
-                f"url='{self.full_url}'")
+        return (
+            f"{self.__class__.__name__} instance: "
+            f"base_url='{self.base_url}', browser='{self.browser.name}', "
+            f"url='{self.full_url}'"
+        )

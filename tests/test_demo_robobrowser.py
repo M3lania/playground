@@ -23,14 +23,15 @@ def default_valid_payload():
     }
 
 
-mail_and_pass = [(
-    "test@test.com",
-    "2test@test.com",
-    "Asdf1234!",
-    "Asdf1234!",
-    "Email Mismatch! You must Retype your email exactly like you "
-    "entered it in the first field.",
-),
+mail_and_pass = [
+    (
+        "test@test.com",
+        "2test@test.com",
+        "Asdf1234!",
+        "Asdf1234!",
+        "Email Mismatch! You must Retype your email exactly like you "
+        "entered it in the first field.",
+    ),
     (
         "test_pass@test.com",
         "test_pass@test.com",
@@ -38,12 +39,13 @@ mail_and_pass = [(
         "2Asdf1234!",
         "Password Mismatch! You must Retype your password exactly like you "
         "entered it in the first field.",
-    )]
+    ),
+]
 
 
 @pytest.mark.env("QA")
 def test_successful_registration_using_robobrowser(
-        robobrowser, base_url, default_valid_payload
+    robobrowser, base_url, default_valid_payload
 ):
     """
     The submission of valid input fields leads to a human proof check. The test, marked
@@ -51,26 +53,30 @@ def test_successful_registration_using_robobrowser(
     """
     register = SignUp(robobrowser, base_url, path=SIGN_UP_PATH)
     response_text = register.sign_up(**default_valid_payload)
-    logger.debug(
-        f"Checking that '{HUMAN_PROOF_CHECK}' is displayed on the new page"
-    )
+    logger.debug(f"Checking that '{HUMAN_PROOF_CHECK}' is displayed on the new page")
     assert HUMAN_PROOF_CHECK in response_text
 
 
 @pytest.mark.regression
 @pytest.mark.parametrize(
-    ("email", "conf_email", "password", "conf_password", "message"), [mail_and_pass[0],
-                                                                      mail_and_pass[1]])
+    ("email", "conf_email", "password", "conf_password", "message"),
+    [mail_and_pass[0], mail_and_pass[1]],
+)
 def test_unsuccessful_registration_using_robobrowser(
-        robobrowser, base_url, email, conf_email, password, conf_password, message):
+    robobrowser, base_url, email, conf_email, password, conf_password, message
+):
     """
     The incorrect submission of email & password results in an invalid input warning.
     Example of test marked as 'regression'.
     """
     register = SignUp(robobrowser, base_url, path=SIGN_UP_PATH)
     try:
-        register.sign_up(email=email, conf_email=conf_email, password=password,
-                         conf_password=conf_password)
+        register.sign_up(
+            email=email,
+            conf_email=conf_email,
+            password=password,
+            conf_password=conf_password,
+        )
     except Exception as e:
         logger.debug(f"Checking that '{message}' is displayed on the same page")
         assert message in str(e)
@@ -82,8 +88,10 @@ class TestLocalizationFlow:
     Tests which depend on each other. If the first one fails, the second one will be
     skipped and marked as XFAIL. Useful info can be passed from one test to another.
     """
-    def test_successful_localization_using_robobrowser(self, request, robobrowser,
-                                                       base_url):
+
+    def test_successful_localization_using_robobrowser(
+        self, request, robobrowser, base_url
+    ):
         """
         Using a valid input grants access to a new page link. This URL is called
         latt_longt_url and is passed to the next test.
@@ -104,9 +112,7 @@ class TestLocalizationFlow:
         latitude_url = request.config.cache.get("latitude_url", None)
 
         json_latitude_url = f"{latitude_url}?json=1"
-        logger.debug(
-            f"Fetching latitude info from API endpoint: {json_latitude_url}"
-        )
+        logger.debug(f"Fetching latitude info from API endpoint: {json_latitude_url}")
         response = requests.get(json_latitude_url)
         parsed = response.json()
 

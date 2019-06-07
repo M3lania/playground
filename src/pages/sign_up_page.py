@@ -6,10 +6,14 @@ from src.wait import element_visible
 
 class SignUpPageLocators:
     PAGE_TITLE = (By.CSS_SELECTOR, "head>title")
-    EMAIL_FIRST_INPUT = (By.CSS_SELECTOR,
-                         ".alert.alert-info:nth-child(1) .form-control")
-    EMAIL_SECOND_INPUT = (By.CSS_SELECTOR,
-                          ".alert.alert-info:nth-child(2) .form-control")
+    EMAIL_FIRST_INPUT = (
+        By.CSS_SELECTOR,
+        ".alert.alert-info:nth-child(1) .form-control",
+    )
+    EMAIL_SECOND_INPUT = (
+        By.CSS_SELECTOR,
+        ".alert.alert-info:nth-child(2) .form-control",
+    )
     PASSWORD_FIRST_INPUT = (By.CSS_SELECTOR, ".alert-danger:nth-child(3) input")
     PASSWORD_SECOND_INPUT = (By.CSS_SELECTOR, ".alert-danger:nth-child(4) input")
     CREATE_ACCOUNT_BUTTON = (By.CSS_SELECTOR, ".btn.btn-large.btn-primary")

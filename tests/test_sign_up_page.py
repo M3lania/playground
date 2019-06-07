@@ -23,4 +23,4 @@ class TestSignUpPageHappyFlow:
         sign_up_page.fill_in_password_second_input(password)
 
         sign_up_page.click_create_account_button()
-        assert (PARAGRAPH.format(email) in sign_up_page.human_proof_first_paragraph)
+        assert PARAGRAPH.format(email) in sign_up_page.human_proof_first_paragraph

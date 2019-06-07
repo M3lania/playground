@@ -9,8 +9,10 @@ class HomePageLocators:
     LOCATION_INPUT = (By.CSS_SELECTOR, ".form-control")
     NEXT_BUTTON = (By.CSS_SELECTOR, "input.pull-left")
     LOCATION_ERROR = (By.CSS_SELECTOR, "div.alert")
-    GEOCODE_MENU_BUTTON = (By.CSS_SELECTOR,
-                           "ul.nav.navbar-nav.navbar-right>li:first-child")
+    GEOCODE_MENU_BUTTON = (
+        By.CSS_SELECTOR,
+        "ul.nav.navbar-nav.navbar-right>li:first-child",
+    )
 
 
 class HomePage(Page):

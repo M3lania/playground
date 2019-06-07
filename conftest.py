@@ -2,8 +2,7 @@ import pytest
 from selenium import webdriver
 from robobrowser import RoboBrowser
 
-ENV = {"PROD": "https://geocode.xyz",
-       "QA": "https://qa.geocode.xyz"}
+ENV = {"PROD": "https://geocode.xyz", "QA": "https://qa.geocode.xyz"}
 
 
 def pytest_addoption(parser):
