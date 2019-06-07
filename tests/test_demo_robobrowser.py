@@ -23,26 +23,6 @@ def default_valid_payload():
     }
 
 
-mail_and_pass = [
-    (
-        "test@test.com",
-        "2test@test.com",
-        "Asdf1234!",
-        "Asdf1234!",
-        "Email Mismatch! You must Retype your email exactly like you "
-        "entered it in the first field.",
-    ),
-    (
-        "test_pass@test.com",
-        "test_pass@test.com",
-        "Asdf1234!",
-        "2Asdf1234!",
-        "Password Mismatch! You must Retype your password exactly like you "
-        "entered it in the first field.",
-    ),
-]
-
-
 @pytest.mark.env("QA")
 def test_successful_registration_using_robobrowser(
     robobrowser, base_url, default_valid_payload
@@ -57,10 +37,19 @@ def test_successful_registration_using_robobrowser(
     assert HUMAN_PROOF_CHECK in response_text
 
 
+error_msg = (
+    "{} Mismatch! You must Retype your {} exactly like you entered it in the "
+    "first field."
+)
+
+
 @pytest.mark.regression
 @pytest.mark.parametrize(
     ("email", "conf_email", "password", "conf_password", "message"),
-    [mail_and_pass[0], mail_and_pass[1]],
+    [
+        ("a@a.com", "aa@a.com", "a", "a", error_msg.format("Email", "email")),
+        ("a@a.com", "a@a.com", "a", "aa", error_msg.format("Password", "password"))
+    ]
 )
 def test_unsuccessful_registration_using_robobrowser(
     robobrowser, base_url, email, conf_email, password, conf_password, message
